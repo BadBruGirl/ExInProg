@@ -4,38 +4,24 @@ package HW2;
 введенное значение. Ввод текста вместо числа не должно приводить к падению приложения, вместо этого, 
 необходимо повторно запросить у пользователя ввод данных. */
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
-
+import java.util.Scanner;
 public class Task1 {
 
+    static Scanner iScanner = new Scanner(System.in, "ibm866");
+    static String input;
     public static void main(String[] args) {
-        float userVal = getFloatVal();
-        System.out.println();
-        System.out.println("You entered the following number:");
-        System.out.println(userVal);
+        System.out.println(inpFloat());
     }
+    public static float inpFloat() {
 
-    static float getFloatVal() {
-    float val = 0;
-    boolean status=true;
-    while(status){
-        InputStream UserInput = System.in;
-        Reader inputReader = new InputStreamReader(UserInput);
-        System.out.println("Input some float value:");
-        BufferedReader bufferedReader = new BufferedReader(inputReader);
-        try {
-            val=Float.parseFloat(bufferedReader.readLine());
-            status=false;
-            }
-        catch (IOException | NumberFormatException exception) {
-            System.out.println("User input is not number. Or there is any IO problem. Try again!");
-            //exception.printStackTrace();
-            }
+        System.out.println("Введите число типа float c точкой: ");
+        input = iScanner.next();
+
+        while (!input.matches("[+-]?([0-9]*[.])?[0-9]+")) { // если значение введено не верно, запросит ввод еще раз, до тех пор пока не будет введено число
+            System.out.println("Введите число используя точку! Неверный ввод!");
+            input = iScanner.nextLine();
         }
-    return val;
-    }
+        iScanner.close();
+        return Float.parseFloat(input); // parseFloat - возвращает число с плавающей запятой
+    }    
 }
